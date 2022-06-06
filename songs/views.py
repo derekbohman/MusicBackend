@@ -1,6 +1,13 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .models import Song
+from .serializers import SongSerializer
 
 @api_view(["Get"])
 def songs_list(request):
-    return Response("Ok.")
+
+    songs = Song.objects.all()
+
+    serializer = SongSerializer(songs, many=True)
+
+    return Response(serializer.data)
